@@ -15,9 +15,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UserDto {
     private long id;
-    @NotBlank(message = "email является обязательным")
+    @NotBlank(message = "email является обязательным!")
     @Email
     private String email;
-    @NotBlank(message = "login является обязательным")
+    @NotBlank(message = "login является обязательным!")
     private String name;
 }
