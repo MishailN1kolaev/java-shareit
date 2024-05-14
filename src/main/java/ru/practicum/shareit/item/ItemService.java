@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-    private final ItemStorageImpl itemStorage;
+    private final ItemStorage itemStorage;
     private final UserStorage userStorage;
     private final ItemMapper itemMapper;
 
