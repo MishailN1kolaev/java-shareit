@@ -75,14 +75,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingResponseDto> getBookingByItemId(Long itemId, Long userId) {
-        return bookingRepository.findByItemId(itemId).stream()
-                .map(BookingMapper::mapToBookingResponseDto)
-                .collect(Collectors.toList());
-
-    }
-
-    @Override
     public List<BookingResponseDto> getAllBookingByBookerId(String stateStr, Long bookerId) {
         BookingState state;
         try {

@@ -23,7 +23,6 @@ public class BookingMapper {
         );
     }
 
-
     public static Booking mapToBooking(BookingRequestDto bookingDto, User booker, Item item) {
         Booking booking = new Booking();
         booking.setStart(bookingDto.getStart());

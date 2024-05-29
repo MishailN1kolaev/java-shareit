@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import ru.practicum.shareit.item.item_packege.Item;
 import ru.practicum.shareit.user.User;
 
@@ -40,6 +41,5 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column
     private BookingStatus status = BookingStatus.WAITING;
-
 
 }
