@@ -1,6 +1,7 @@
-package ru.practicum.shareit.item.item_packege;
+package ru.practicum.shareit.item.item_package;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.*;
@@ -10,7 +11,6 @@ import ru.practicum.shareit.item.comment.Comment;
 import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.comment.CommentMapper;
 import ru.practicum.shareit.item.comment.CommentRepository;
-import ru.practicum.shareit.item.item_packege.*;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 
 @Service
 @Transactional(readOnly = true)
@@ -71,20 +70,21 @@ public class ItemServiceImpl implements ItemService {
         }
         repository.save(foundItem);
 
-        return getItemByIdResponse(itemId, userId);
+        return getItemById(itemId, userId);
     }
 
 
     @Override
-    public List<ItemResponseDto> getAllItemsWithBooking(Long userId) {
-        List<Item> itemsList = repository.findByOwnerIdOrderById(userId);
+    public List<ItemResponseDto> getAllItems(Long userId, Integer from, Integer size) {
+        PageRequest page = PageRequest.of(from / size, size);
+        List<Item> itemsList = repository.findByOwnerIdOrderById(userId, page);
         return itemsList.stream()
-                .map(item -> getItemByIdResponse(item.getId(), userId))
+                .map(item -> getItemById(item.getId(), userId))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ItemResponseDto getItemByIdResponse(Long itemId, Long userId) {
+    public ItemResponseDto getItemById(Long itemId, Long userId) {
         Item item = repository.findById(itemId).orElseThrow(() -> new NoDataException("Вещь не существует"));
         Optional<Booking> last = bookingRepository.findFirstByItemIdAndStartBeforeAndStatusNotOrderByStartDesc(itemId, LocalDateTime.now(), BookingStatus.REJECTED);
         Optional<Booking> next = bookingRepository.findFirstByItemIdAndStartAfterAndStatusNotOrderByStart(itemId, LocalDateTime.now(), BookingStatus.REJECTED);
@@ -105,14 +105,7 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public List<ItemDto> getAllItemByOwner(Long ownerId) {
-        return repository.findByOwnerIdOrderById(ownerId).stream()
-                .map(ItemMapper::mapToItemDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ItemDto> searchItem(String request) {
+    public List<ItemDto> searchItem(String request, Integer from, Integer size) {
         if (request.isBlank()) {
             return new ArrayList<>();
         }

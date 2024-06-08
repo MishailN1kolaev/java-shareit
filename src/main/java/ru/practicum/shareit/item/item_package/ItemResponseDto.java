@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item.item_packege;
+package ru.practicum.shareit.item.item_package;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,18 +8,15 @@ import ru.practicum.shareit.item.comment.CommentDto;
 
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemResponseDto {
-    private long id;
+    private Long id;
     private String name;
     private String description;
     private Boolean available;
+    private Long requestId;
     private BookingItemDto lastBooking;
     private BookingItemDto nextBooking;
     private List<CommentDto> comments;
