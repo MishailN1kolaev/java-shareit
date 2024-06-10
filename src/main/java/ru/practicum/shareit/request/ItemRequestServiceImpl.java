@@ -9,6 +9,7 @@ import ru.practicum.shareit.item.item_package.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +26,14 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Transactional
     @Override
     public ItemRequestDtoResponse createItemRequest(ItemRequestDto itemRequestDto, Long requesterId) {
-        User requester = userRepository.findById(requesterId).orElseThrow(() -> new NoDataException("Нет такого пользователя"));
+        User requester = userRepository.findById(requesterId).orElseThrow(() -> new EntityNotFoundException("Нет такого пользователя"));
         itemRequestDto.setCreated(LocalDateTime.now());
         return ItemRequestMapper.mapToItemRequestDtoResponse(itemRequestRepository.save(ItemRequestMapper.mapToItemRequest(itemRequestDto, requester)));
     }
 
     @Override
     public List<ItemRequestDtoResponse> getAllItemRequestByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NoDataException("Нет такого пользователя"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Пользователь с id " + userId + " не найден"));
         List<ItemRequestDtoResponse> allItemRequests = new ArrayList<>(itemRequestRepository.findByRequesterId(userId).stream()
                 .map(ItemRequestMapper::mapToItemRequestDtoResponse)
                 .collect(Collectors.toList()));
@@ -51,7 +52,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
     @Override
     public ItemRequestDtoResponse getItemRequestById(Long requestId, Long userId) {
-        User requester = userRepository.findById(userId).orElseThrow(() -> new NoDataException("Нет такого пользователя"));
+        User requester = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Нет такого пользователя"));
         return ItemRequestMapper.mapToItemRequestDtoResponse(itemRequestRepository.findById(requestId).orElseThrow(() -> new NoDataException("Нет такого запроса")));
 
     }

@@ -2,6 +2,7 @@ package ru.practicum.shareit.booking;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exeption.NoDataException;
@@ -10,6 +11,7 @@ import ru.practicum.shareit.item.item_package.Item;
 import ru.practicum.shareit.item.item_package.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
+import ru.practicum.shareit.util.PaginationUtils;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -150,7 +152,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NoDataException("Только владелец может получить данные бронирования");
         }
 
-        PageRequest page = PageRequest.of(from > 0 ? from / size : 0, size);
+        Pageable page = PaginationUtils.createPageRequest(from, size);
 
         switch (state) {
             case ALL:
