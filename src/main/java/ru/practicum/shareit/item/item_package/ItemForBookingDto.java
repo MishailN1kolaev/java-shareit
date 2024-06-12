@@ -1,12 +1,8 @@
-package ru.practicum.shareit.item.item_packege;
+package ru.practicum.shareit.item.item_package;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-/**
- * TODO Sprint add-controllers.
- */
 
 @Data
 @AllArgsConstructor

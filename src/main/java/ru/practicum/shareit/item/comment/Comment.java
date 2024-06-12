@@ -3,7 +3,7 @@ package ru.practicum.shareit.item.comment;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.practicum.shareit.item.item_packege.Item;
+import ru.practicum.shareit.item.item_package.Item;
 import ru.practicum.shareit.user.User;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ public class Comment {
     private Long id;
 
     @NotNull
-    @Column
+    @Column(name = "text")
     private String text;
 
     @NotNull
@@ -35,7 +35,7 @@ public class Comment {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @Column
+    @Column(name = "created")
     private LocalDateTime created;
 
 }

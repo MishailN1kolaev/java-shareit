@@ -3,8 +3,7 @@ package ru.practicum.shareit.booking;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import ru.practicum.shareit.item.item_packege.Item;
+import ru.practicum.shareit.item.item_package.Item;
 import ru.practicum.shareit.user.User;
 
 import javax.persistence.*;
@@ -39,7 +38,8 @@ public class Booking {
     private User booker;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "status")
     private BookingStatus status = BookingStatus.WAITING;
+
 
 }
