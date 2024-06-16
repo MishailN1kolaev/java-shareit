@@ -7,7 +7,6 @@ import ru.practicum.shareit.item.item_package.Item;
 import ru.practicum.shareit.user.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,11 +20,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(name = "start_date")
     private LocalDateTime start;
 
-    @NotNull
     @Column(name = "end_date")
     private LocalDateTime end;
 

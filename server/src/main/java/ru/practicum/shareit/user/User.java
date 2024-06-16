@@ -3,7 +3,6 @@ package ru.practicum.shareit.user;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +20,6 @@ public class User {
     @Column(unique = true, name = "email")
     private String email;
 
-    @NotBlank(message = "логин является обязательным")
     @Column(name = "name")
     private String name;
 }
